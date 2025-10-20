@@ -3,9 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome</title>
 </head>
 <body>
+    <div>
+        
+        <form name="trivia-setup" id="trivia-setup">
+          
+          Category: <select name="category" id="category">
+            <option value="" >Select subjet</option>
+          </select>
+          <br><br>
+          Difficulty: <select name="difficulty" id="difficulty">
+            <option value="" selected="selected">Please select subject first</option>
+          </select>
+          <br><br>
+          Type: <select name="type" id="type">
+            <option value="" selected="selected">Please select topic first</option>
+          </select>
+          <br><br>
+          Amount of Questions: <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="border border-gray-300 rounded-md">
+          <input type="submit" value="Submit">
+        </form>
+    </div>
     
+    <script src="./js/welcome-page.js" type="module"></script>
 </body>
 </html>
