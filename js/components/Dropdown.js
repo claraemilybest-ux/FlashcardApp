@@ -4,10 +4,9 @@ class Dropdown {
     }
     render(){
         console.log('rendering');
-        const body = document.getElementById('app');
+        const body = document.getElementById('dropdown');
         body.innerHTML = `
         <form name="trivia-setup" id="trivia-setup">
-          
           Category: <select name="category" id="category">
           </select>
           <br><br>
@@ -18,7 +17,7 @@ class Dropdown {
           </select>
           <br><br>
           Amount of Questions: <input type="number" id="quantity" name="quantity" min="1" max="30" value="10" class="border border-gray-300 rounded-md">
-          <input type="submit" value="Submit">
+          <input type="submit" value="Start">
         </form>
         `;
         this.fetchOptions();

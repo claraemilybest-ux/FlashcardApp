@@ -1,13 +1,5 @@
-import dropdown from "./components/Dropdown.js";
 import ScreenTransition from "./components/ScreenTransition.js";
 
 ScreenTransition.init();
 
-dropdown.render();
-
-
-
-
-
-
-
+// page scripts here
