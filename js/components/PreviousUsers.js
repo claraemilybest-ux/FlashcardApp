@@ -1,19 +1,20 @@
-import User from './user';
+import User from '../components/user.js';
 
 class PreviousUsers {
     constructor(){
         const savedUsers = localStorage.getItem(`previousUsers`);
-        this.usersList = savedCartItems ? JSON.parse(savedUsers).map((user) => 
-            new User(user.name, password, previousGames, generalStatistics)) : [];
+        this.usersList = savedUsers ? JSON.parse(savedUsers).map((user) => 
+            new User(user.name, user.password, user.previousGames, user.generalStatistics)) : [];
     }
     newUser(name, password){
-        const user = new User(name, password, [], {});
         if (this.checkUserExists(name)){
             console.log('That user name is already taken.');
             return;
         }
+        const user = new User(name, password, [], []);
         this.usersList.push(user);
         this.updateUserStorage();
+        return user;
     }
     updateUserStorage(){
         localStorage.setItem('previousUsers', JSON.stringify(this.usersList))
@@ -23,6 +24,7 @@ class PreviousUsers {
     }
     loginUser(name, password){
         const user = this.usersList.find(user => user.name === name);
+        console.log(user);
         if (!user){
             console.log('User not found.');
             return;
