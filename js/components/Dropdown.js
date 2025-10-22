@@ -1,3 +1,5 @@
+import game from "./Game.js";
+
 class Dropdown {
     constructor(){
 
@@ -6,18 +8,25 @@ class Dropdown {
         console.log('rendering');
         const body = document.getElementById('dropdown');
         body.innerHTML = `
-        <form name="trivia-setup" id="trivia-setup">
-          Category: <select name="category" id="category">
-          </select>
-          <br><br>
+        <form name="trivia-setup" id="trivia-setup" class="p-4 border border-gray-300 rounded-md shadow-md bg-white container justify-content-center">
+          <div class="justify-content-center mb-3 g-0 vw-fit">
+            Category: <select name="category" id="category">
+            </select>
+          </div>
+          <div>
           Difficulty: <select name="difficulty" id="difficulty">
           </select>
-          <br><br>
+          </div>
+          <div>
           Type: <select name="type" id="type">
           </select>
-          <br><br>
+          </div>
+          <div>
           Amount of Questions: <input type="number" id="quantity" name="quantity" min="1" max="30" value="10" class="border border-gray-300 rounded-md">
+          </div>
+          <div>
           <input type="submit" value="Start">
+          </div>
         </form>
         `;
         this.fetchOptions();
@@ -74,9 +83,13 @@ class Dropdown {
                 method: 'GET',
             });
             const data = await response.json();
+            
             console.log(data);
             
             console.log('game started');
+            game.newGame(data.results, category, difficulty);
+            console.log(game);
+
         } catch (error){
             console.error('Error fetching questions:', error)
         }
