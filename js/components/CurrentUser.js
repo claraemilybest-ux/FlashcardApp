@@ -1,8 +1,15 @@
 import previousUsers from "../components/PreviousUsers.js";
+import User from "./user.js";
 class CurrentUser {
     constructor(){
-        this.user = null;
-        this.loginStatus = false;
+        const savedCurrent = JSON.parse(localStorage.getItem(`currentUser`));
+        console.log(savedCurrent);
+        
+        if (!savedCurrent){
+            this.loginStatus = false;
+        } else{
+            this.user = new User (savedCurrent.name, savedCurrent.password, savedCurrent.previousGames, savedCurrent.generalStatistics);
+        }
     }
     setCurrentUser(user){
         this.user = user;
@@ -10,6 +17,7 @@ class CurrentUser {
         const loginArea = document.getElementById('login');
         this.loginStatus = true;
         loginArea.innerHTML = `<h2>Welcome, ${this.name}!</h2>`;
+        localStorage.setItem('currentUser', JSON.stringify(this.user));
 
     }
     render(){
@@ -91,6 +99,10 @@ class CurrentUser {
             createAccountOverlay.classList.add('d-none'); 
 
         });
+    }
+    updateStats(){
+        this.user.generalStatistics.push(5)
+        previousUsers.updateUser(this.user);
     }
     
 }

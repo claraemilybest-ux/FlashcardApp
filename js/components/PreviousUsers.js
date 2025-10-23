@@ -19,6 +19,15 @@ class PreviousUsers {
     updateUserStorage(){
         localStorage.setItem('previousUsers', JSON.stringify(this.usersList))
     }
+    updateUser(user){
+        const index = this.usersList.findIndex((userOfList) => userOfList.name === user.name);
+        this.usersList[index] = user;
+        this.updateUserStorage
+    }
+    clearStorage(){
+        this.usersList = [];
+        this.updateUserStorage();
+    }
     checkUserExists(name){
         return this.usersList.some(user => user.name === name);
     }
@@ -36,6 +45,10 @@ class PreviousUsers {
         console.log('Login successful.');
             return user;
         
+    }
+    getUsers(){
+        console.log(this.usersList);
+        return this.usersList;
     }
 
 }

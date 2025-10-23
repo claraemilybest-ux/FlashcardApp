@@ -89,6 +89,7 @@ class Dropdown {
             console.log('game started');
             game.newGame(data.results, category, difficulty);
             console.log(game);
+            window.location.href = 'trivia-page.html';
 
         } catch (error){
             console.error('Error fetching questions:', error)
