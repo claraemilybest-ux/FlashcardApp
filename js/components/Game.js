@@ -1,16 +1,15 @@
 class Game{
-    constructor(){
-        this.questions
-        this.date
-        this.time
-        this.category
-        this.difficulty
-    }
-    newGame(questions, category, difficulty){
-        this.questions = questions;
+    constructor(questions, category, difficulty, amount){
+        this.questions = questions
         this.category = category;
         this.difficulty = difficulty;
+        this.amount = amount;
+    }
+    gameStats(date, time, wins){
+        this.date = date;
+        this.time = time;
+        this.wins = wins;
+
     }
 }
-const game = new Game();
-export default game;
+export default Game;

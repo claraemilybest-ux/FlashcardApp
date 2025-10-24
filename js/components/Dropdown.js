@@ -1,4 +1,4 @@
-import game from "./Game.js";
+import currentGame from "./CurrentGame.js";
 
 class Dropdown {
     constructor(){
@@ -83,12 +83,13 @@ class Dropdown {
                 method: 'GET',
             });
             const data = await response.json();
+            const questions = data.results;
             
-            console.log(data);
+            console.log(questions);
             
             console.log('game started');
-            game.newGame(data.results, category, difficulty);
-            console.log(game);
+            currentGame.setCurrentGame(questions, category, difficulty, amount);
+            
             window.location.href = 'trivia-page.html';
 
         } catch (error){
