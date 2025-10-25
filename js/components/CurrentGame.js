@@ -19,6 +19,7 @@ class CurrentGame{
         this.timerId = null;
         this.wins = 0;
         this.index = this.questions.length;
+        this.counter = 0;
 
         this.startTime = new Date();
 
@@ -100,11 +101,14 @@ class CurrentGame{
         
             <div id="row1" class="row"></div>
             <div id="row2" class="row"></div>
+
+            <div id="counter"></div>
             `;
         if(!(this.index > 0)){
             this.endGame();
         } else{
             this.index--
+            this.questionCounter();
             this.runQuestion();
         }
 
@@ -121,6 +125,11 @@ class CurrentGame{
     }
     delay(ms){
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    questionCounter(){
+        this.counter++
+        const counterDisplay = document.getElementById('counter');
+        counterDisplay.innerHTML = `Question ${this.counter} of ${this.questions.length}`;
     }
     endGame(){
         console.log("game ended");
