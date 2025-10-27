@@ -1,5 +1,16 @@
 .answer{
-    border: 0;
     height: 8em;
+}
+.answer:hover{
+    cursor: pointer;
+    background-color: cornsilk;
+}
+button{
+    border: 1px solid gray;
     border-radius: 4%;
+}
+
+#app{
+    background-color: lightsteelblue;
+    padding: 1em;
 }

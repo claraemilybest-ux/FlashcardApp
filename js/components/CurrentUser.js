@@ -126,7 +126,7 @@ class CurrentUser {
         }
 
         loginArea.innerHTML = `
-        <div id="loginOverlay" class="d-none bg-light">
+        <div id="loginOverlay" class="d-none bg-light rounded p-1">
             <h2>Sign In</h2>
             <form id="formLogin">
             <div>
@@ -143,7 +143,7 @@ class CurrentUser {
             <button id="openCreateAccountBtn">Create a Account</button>
             <button id="closeLoginBtn">Back</button>
         </div>
-        <div id="createAccountOverlay" class="d-none bg-light">
+        <div id="createAccountOverlay" class="d-none bg-light rounded p-1">
             <h2>Create a Account</h2>
             <form id="formCreateAccount">
             <div>
@@ -170,18 +170,21 @@ class CurrentUser {
 
         openLoginBtn.addEventListener('click', () => {
             loginOverlay.classList.remove('d-none');
+            openLoginBtn.classList.add('d-none');
         });
 
         closeLoginBtn.addEventListener('click', () => {
             if (!loginOverlay.classList.contains('d-none')){
                 loginOverlay.classList.add('d-none');
             }
+            openLoginBtn.classList.remove('d-none');
         });
 
         closeCreateAccountBtn.addEventListener('click', () => {
             if (!createAccountOverlay.classList.contains('d-none')){
                 createAccountOverlay.classList.add('d-none');
             }
+            openLoginBtn.classList.remove('d-none');
         });
 
         openCreateAccountBtn.addEventListener('click', () => {

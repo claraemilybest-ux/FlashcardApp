@@ -1,4 +1,5 @@
 import currentGame from "./CurrentGame.js";
+import currentUser from "./CurrentUser.js";
 
 class Dropdown {
     constructor(){
@@ -66,8 +67,13 @@ class Dropdown {
             }
         }
         form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            this.fetchGame();
+            if (currentUser.user == null){
+                alert('Please login or create an account if you want to play a game.');
+            }else{
+                event.preventDefault();
+                this.fetchGame();
+            }
+            
         })
     }
 
