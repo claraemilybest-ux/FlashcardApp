@@ -24,6 +24,10 @@ class CurrentGame{
 
         this.startTime = new Date();
 
+    // countdown related
+    this.countdownId = null;
+    this.timeRemaining = 0; // seconds
+
         this.nextQuestion();
 
        
@@ -72,8 +76,7 @@ class CurrentGame{
                     console.log('lose');
                 }
 
-                //wait 2 seconds
-                //move to next question
+                
                 
                 await this.delay(1000);
                 this.nextQuestion();
@@ -90,11 +93,13 @@ class CurrentGame{
         });
 
     
-    this.timerId = setTimeout(() => this.nextQuestion(), 10000);
+    // start visual countdown (10 seconds)
+    this.startCountdown(15);
             
     }
     nextQuestion(){
-        clearTimeout(this.timerId);
+    clearTimeout(this.timerId);
+    this.stopCountdown();
         
         const trivia = document.getElementById('trivia');
         trivia.innerHTML = `
@@ -102,8 +107,8 @@ class CurrentGame{
         
             <div id="row1" class="row"></div>
             <div id="row2" class="row"></div>
-
             <div id="counter"></div>
+            <div id="timer" class="mt-2"></div>
             `;
         if(!(this.index > 0)){
             this.endGame();
@@ -114,6 +119,32 @@ class CurrentGame{
         }
 
 
+    }
+
+    startCountdown(seconds){
+        this.timeRemaining = seconds;
+        const timerEl = document.getElementById('timer');
+        if (timerEl) timerEl.innerText = `Next question in: ${this.timeRemaining}s`;
+        this.stopCountdown();
+        this.countdownId = setInterval(() => {
+            this.timeRemaining -= 1;
+            if (timerEl) timerEl.innerText = `Next question in: ${this.timeRemaining}s`;
+            if (this.timeRemaining <= 0){
+                // ensure countdown is stopped and advance to next question
+                this.stopCountdown();
+                // call nextQuestion (use setTimeout to avoid recursion in interval)
+                setTimeout(() => this.nextQuestion(), 0);
+            }
+        }, 1000);
+    }
+
+    stopCountdown(){
+        if (this.countdownId){
+            clearInterval(this.countdownId);
+            this.countdownId = null;
+        }
+        const timerEl = document.getElementById('timer');
+        if (timerEl) timerEl.innerText = '';
     }
     shuffleAnswers(array){
         //shuffle questions
