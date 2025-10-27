@@ -69,10 +69,11 @@ class CurrentUser {
         //past games
         this.user.previousGames.forEach((game) => {
             const gameStats = document.createElement('div');
+            gameStats.classList.add('flex-column', 'mb-3', 'p-2', 'border', 'border-secondary', 'rounded');
             gameStats.innerHTML = `
             Game:
-            <div class="row"><p class="col">Category: ${game.category},</p> <p class="col">Difficulty: ${game.difficulty},</p> <p class="col"> Date: ${game.date}, </p> 
-            <p class="col">Score: ${game.wins}/${game.amount}, </p> <p class="col">Time taken: ${game.time.minutes}:${game.time.seconds}</div>
+            Category: ${game.category}, Difficulty: ${game.difficulty}, Date: ${game.date},  
+            Score: ${game.wins}/${game.amount}, Time taken: ${game.time.minutes}:${game.time.seconds}
             `;
             document.getElementById('gamesDisplay').appendChild(gameStats);
             totalWins += game.wins;
