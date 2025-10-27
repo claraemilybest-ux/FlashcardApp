@@ -4,14 +4,14 @@ class PreviousUsers {
     constructor(){
         const savedUsers = localStorage.getItem(`previousUsers`);
         this.usersList = savedUsers ? JSON.parse(savedUsers).map((user) => 
-            new User(user.name, user.password, user.previousGames, user.generalStatistics)) : [];
+            new User(user.name, user.password, user.previousGames)) : [];
     }
     newUser(name, password){
         if (this.checkUserExists(name)){
             console.log('That user name is already taken.');
             return;
         }
-        const user = new User(name, password, [], []);
+        const user = new User(name, password, []);
         this.usersList.push(user);
         this.updateUserStorage();
         return user;
@@ -20,9 +20,12 @@ class PreviousUsers {
         localStorage.setItem('previousUsers', JSON.stringify(this.usersList))
     }
     updateUser(user){
+        console.log(user);
         const index = this.usersList.findIndex((userOfList) => userOfList.name === user.name);
         this.usersList[index] = user;
-        this.updateUserStorage
+        console.log(this.usersList);
+
+        this.updateUserStorage();
     }
     clearStorage(){
         this.usersList = [];

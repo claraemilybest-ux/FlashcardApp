@@ -1,4 +1,5 @@
 import Game from "../components/Game.js";
+import currentUser from "../components/CurrentUser.js";
 
 class CurrentGame{
     constructor(){
@@ -88,7 +89,7 @@ class CurrentGame{
             rowOn++
         });
 
-    // preserve `this` by using an arrow wrapper (or use this.nextQuestion.bind(this))
+    
     this.timerId = setTimeout(() => this.nextQuestion(), 10000);
             
     }
@@ -134,11 +135,40 @@ class CurrentGame{
     endGame(){
         console.log("game ended");
         const endTime = new Date();
-        const time = endTime - this.startTime;
+        const timeUnprocessed = endTime - this.startTime;
         const date = endTime.toLocaleString();
-        console.log(`date ${date}`);
-        console.log(`time ${time}`);
+        
+
+        let totalSeconds = Math.floor(timeUnprocessed / 1000);
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        let time = {};
+        time.minutes = minutes;
+        time.seconds = seconds;
         this.game.gameStats(date, time, this.wins);
+        trivia.innerHTML = `
+            <h1 id="gameQuestion" class="row d-flex justify-content-center">Trivia Finished</h1>
+        
+            <div id="row1" class="row">Score: ${this.wins}/${this.questions.length}</div>
+            <div id="row2" class="row">Time Taken: ${minutes}:${seconds}</div>
+
+            <div>
+                <button id="saveResults">Save Game Results</button>
+                <button id="statsBtn">Go to Stats</button>
+            </div>
+            
+            `;
+        const saveBtn = document.getElementById('saveResults');
+        const statsBtn = document.getElementById('statsBtn');
+
+        saveBtn.addEventListener('click', () => {
+            currentUser.saveGame(this.game);
+            document.getElementById('saveResults').classList.add('d-none');
+
+        });
+        statsBtn.addEventListener('click', () => {
+            window.location.href = 'stats-page.html';
+        });
     }
 }
 const currentGame = new CurrentGame();

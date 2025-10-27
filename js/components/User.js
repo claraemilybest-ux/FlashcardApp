@@ -1,9 +1,8 @@
 class User {
-    constructor(name, password, previousGames, generalStatistics){
+    constructor(name, password, previousGames){
         this.name = name;
         this.password = password;
         this.previousGames = previousGames;
-        this.generalStatistics = generalStatistics;
 
     }
 }

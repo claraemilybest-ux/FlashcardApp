@@ -22,7 +22,7 @@ class Dropdown {
           </select>
           </div>
           <div>
-          Amount of Questions: <input type="number" id="quantity" name="quantity" min="1" max="30" value="10" class="border border-gray-300 rounded-md">
+          Amount of Questions: <input type="number" id="quantity" name="quantity" min="5" max="35" value="10" class="border border-gray-300 rounded-md">
           </div>
           <div>
           <input type="submit" value="Start">
