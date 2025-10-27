@@ -31,13 +31,22 @@ function createOverlay(bg, duration) {
   return overlay;
 }
 
-function isLocalLink(a) {
+function isLocalUrl(urlString) {
   try {
-    const url = new URL(a.href, location.href);
+    const url = new URL(urlString, location.href);
     return url.origin === location.origin;
   } catch (e) {
     return false;
   }
+}
+
+function getHrefFromElement(el){
+  // anchors use href, other elements can use data-href
+  if (!el) return null;
+  if (el.tagName === 'A' && el.hasAttribute('href')) return el.getAttribute('href');
+  if (el.dataset && el.dataset.href) return el.dataset.href;
+  if (el.hasAttribute && el.hasAttribute('data-href')) return el.getAttribute('data-href');
+  return null;
 }
 
 const defaults = {
@@ -75,25 +84,37 @@ const ScreenTransition = {
   },
 
   _attachLinks() {
-    const sel = this._opts.selector || 'a';
+    // default to anchors and elements that carry a data-href (buttons, divs, etc.)
+    const sel = this._opts.selector || 'a, [data-href]';
     const links = Array.from(document.querySelectorAll(sel));
-    links.forEach(a => {
-      // skip if has target or download or rel external
-      if (a.target === '_blank' || a.hasAttribute('download') || a.getAttribute('rel') === 'external') return;
-      if (!a.href) return;
-      if (!isLocalLink(a)) return;
-      // optional: ignore same-page hash navigation
-      if (!this._opts.includeHash && a.hash && (a.pathname === location.pathname)) return;
+    links.forEach(el => {
+      const href = getHrefFromElement(el);
+      if (!href) return;
+
+      // For anchors, skip if target=_blank or download or rel=external
+      if (el.tagName === 'A' && (el.target === '_blank' || el.hasAttribute('download') || el.getAttribute('rel') === 'external')) return;
+
+      // ensure same-origin URL
+      if (!isLocalUrl(href)) return;
+
+      // optional: ignore same-page hash navigation for anchors
+      if (!this._opts.includeHash && el.tagName === 'A'){
+        try {
+          const url = new URL(href, location.href);
+          if (url.pathname === location.pathname && url.hash) return;
+        } catch(e){}
+      }
 
       // avoid double-binding
-      if (a.__mpaBound) return;
-      a.__mpaBound = true;
+      if (el.__mpaBound) return;
+      el.__mpaBound = true;
 
-      a.addEventListener('click', (e) => {
+      el.addEventListener('click', (e) => {
         // allow modifier keys to open in new tab
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        // for anchors, prevent default; for other elements also prevent to avoid form submits etc
         e.preventDefault();
-        this.start(a.href);
+        this.start(href);
       });
     });
   },

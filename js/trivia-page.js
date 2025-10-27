@@ -1,7 +1,4 @@
 import ScreenTransition from "./components/ScreenTransition.js";
-import game from "./components/Game.js";
-import currentUser from "./components/CurrentUser.js";
-import previousUsers from "./components/PreviousUsers.js";
 import currentGame from "./components/CurrentGame.js";
 
 ScreenTransition.init();

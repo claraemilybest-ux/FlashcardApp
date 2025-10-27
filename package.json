@@ -2,8 +2,14 @@
   "name": "flashcard-app",
   "version": "1.0.0",
   "private": true,
-  
+  "devDependencies": {
+    "jasmine": "^4.5.0",
+    "jsdom": "^22.1.0"
+  },
   "dependencies": {
     "bootstrap": "^5.2.3"
+  },
+  "scripts": {
+    "test": "jasmine"
   }
 }
